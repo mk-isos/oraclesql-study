@@ -1,0 +1,83 @@
+SELECT SAL
+  FROM EMP
+ WHERE ENAME = 'JONES';
+
+SELECT *
+  FROM EMP
+ WHERE SAL > 2975;
+
+SELECT *
+  FROM EMP
+ WHERE SAL > (SELECT SAL
+                FROM EMP
+               WHERE ENAME = 'JONES');
+
+SELECT *
+  FROM EMP
+ WHERE HIREDATE < (SELECT HIREDATE
+                     FROM EMP
+                    WHERE ENAME = 'SCOTT');
+
+SELECT E.EMPNO, E.ENAME, E.JOB, E.SAL, D.DEPTNO, D.DNAME, D.LOC
+  FROM EMP E, DEPT D
+ WHERE E.DEPTNO = D.DEPTNO
+   AND E.DEPTNO = 20
+   AND E.SAL > (SELECT AVG(SAL)
+                  FROM EMP);
+
+SELECT *
+  FROM EMP
+ WHERE DEPTNO IN (20, 30);
+
+SELECT *
+  FROM EMP
+ WHERE SAL IN (SELECT MAX(SAL)
+                 FROM EMP
+               GROUP BY DEPTNO);
+
+SELECT MAX(SAL)
+  FROM EMP
+GROUP BY DEPTNO;
+
+SELECT *
+  FROM EMP
+ WHERE SAL = ANY (SELECT MAX(SAL)
+                    FROM EMP
+                  GROUP BY DEPTNO);
+
+SELECT *
+  FROM EMP
+ WHERE SAL = SOME (SELECT MAX(SAL)
+                     FROM EMP
+                   GROUP BY DEPTNO);
+
+SELECT *
+  FROM EMP
+ WHERE SAL < ANY (SELECT SAL
+                    FROM EMP
+                   WHERE DEPTNO = 30)
+ORDER BY SAL, EMPNO;
+
+SELECT SAL
+  FROM EMP
+ WHERE DEPTNO = 30;
+
+SELECT *
+  FROM EMP
+ WHERE SAL > ANY (SELECT SAL
+                    FROM EMP
+                   WHERE DEPTNO = 30);
+
+SELECT *
+  FROM EMP
+ WHERE SAL < ALL (SELECT SAL
+                    FROM EMP
+                   WHERE DEPTNO = 30);
+
+SELECT *
+  FROM EMP
+ WHERE SAL > ALL (SELECT SAL
+                    FROM EMP
+                   WHERE DEPTNO = 30);
+
+
